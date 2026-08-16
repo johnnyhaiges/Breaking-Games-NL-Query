@@ -79,25 +79,4 @@ It opens in your browser. Try questions like:
 - "What's the average cart value for checkouts that reached payment?"
 - "Show me the top 5 products by revenue."
 
-## How it works (for your interview answer)
 
-1. **Schema retrieval** (`schema_utils.py`) — reads table/column names and
-   a couple of sample rows straight from the SQLite file via
-   `sqlite_master` and `PRAGMA table_info`, every time you ask a question.
-   This is the "retrieval" in retrieval-augmented — the model never works
-   from a stale or guessed schema.
-2. **Prompt construction + generation** (`llm_engine.py`) — combines the
-   live schema, a few worked examples, and your question into one prompt,
-   sends it to Gemini, strips markdown fences from the response.
-3. **Execution + self-correction** (`app.py`) — runs the returned SQL
-   against your db with `pandas.read_sql_query`. If it errors (bad column
-   name, syntax issue), the error is sent back to the model once for a
-   fix-up retry before giving up. That retry loop is what makes it more
-   than a toy — it's handling the fact that the model is imperfect rather
-   than just trusting its first output.
-
-## Stretch (optional, if you have time)
-
-Semantic product search with `sentence-transformers` + FAISS, so you can
-also add "Vector Search / Embeddings" to your skills line. Not required —
-the text-to-SQL pipeline above is already the core deliverable.
