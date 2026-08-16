@@ -27,7 +27,8 @@ against **any** SQLite database — point it at your own to try it out.
 ## 1. Set up the environment
 
 ```bash
-cd bg-rag
+git clone https://github.com/johnnyhaiges/Breaking-Games-NL-Query.git
+cd Breaking-Games-NL-Query
 python3 -m venv venv
 source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -44,23 +45,23 @@ cp .env.example .env
 # then edit .env: GEMINI_API_KEY=your_actual_key
 ```
 
-## 3. Add your database
+## 3. Point it at a database
 
-Copy your `breaking_games_p2.db` (or whichever db you're using) into this
-folder. If it's named something else or lives elsewhere, you can point to
-it directly in the app's sidebar once it's running — you don't have to
-rename anything.
+Enter the path to any SQLite `.db` file in the app's sidebar once it's
+running (step 5 below) — there's no bundled sample dataset, since the one
+this was built and demoed against is private (see "About the data" above).
 
 ## 4. Check your few-shot examples
 
-Open `few_shot_examples.py`. It has 4 example question→SQL pairs using
-column names based on what's documented from the externship (`payment_method`,
-`product_title`, `category`, `spend`, `campaign_name`). Before you demo:
+`few_shot_examples.py` ships with 4 example question→SQL pairs written
+against the specific database this was built for (tables like
+`fact_product_performance`, `dim_product`, `shopify_checkouts`,
+`meta_campaigns`). If you point this at your own database:
 
 1. Run the app (step 5 below).
 2. Open the **"View schema"** expander in the sidebar — it shows your real
    table/column names, pulled live from the db.
-3. Fix any mismatches in `few_shot_examples.py`.
+3. Rewrite the examples in `few_shot_examples.py` to match.
 
 This step matters more than it looks like: the schema block grounds *what
 exists*, but the examples teach the model *the style and the specific
@@ -94,22 +95,6 @@ It opens in your browser. Try questions like:
    fix-up retry before giving up. That retry loop is what makes it more
    than a toy — it's handling the fact that the model is imperfect rather
    than just trusting its first output.
-
-## Pushing to GitHub
-
-```bash
-git init
-echo "venv/
-.env
-*.db" > .gitignore
-git add .
-git commit -m "Natural-language analytics interface for Breaking Games data"
-git remote add origin https://github.com/johnnyhaiges/<your-repo-name>.git
-git push -u origin main
-```
-
-`.gitignore` excludes your `.env` (API key) and the `.db` file (your
-externship data) from the public repo — keep both local.
 
 ## Stretch (optional, if you have time)
 
