@@ -1,11 +1,4 @@
-"""
-Introspects a SQLite database and formats its schema as plain text.
 
-This is the "retrieval" half of the retrieval-augmented prompt: instead of
-hardcoding table/column names (which breaks the moment the db changes), we
-read them straight from sqlite_master + PRAGMA table_info at request time.
-That's what keeps the LLM grounded in the real schema instead of guessing.
-"""
 
 import sqlite3
 
