@@ -1,12 +1,4 @@
-"""
-The text-to-SQL core: builds a schema-grounded prompt, calls Gemini, and
-extracts clean SQL from the response.
 
-Uses the current Google GenAI SDK (`google-genai`, `from google import genai`) —
-NOT the deprecated `google-generativeai` package. If you're following an
-older tutorial that imports `google.generativeai`, that library is
-deprecated; this file uses its replacement.
-"""
 
 import os
 import re
